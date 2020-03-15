@@ -1,49 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PrimeNumbers
 {
     class Program
     {
+        //Nytt primechecker object där jag kan köra alla mina funktioner.
+        public static PrimeChecker pc = new PrimeChecker();
         static void Main(string[] args)
         {
+            //Loopar så att man kan fortsätta få val i programet om vad man vill göra.
             while (true)
             {
-                Prime();
+                Menu();
             }
         }
 
-        static void Prime()
+        //Denna metod hanterar användar input som sedan bestämmer vad programmet ska göra.
+        //alla menyvalen har jag beskrivit i PrimeChecker klassen
+        private static void Menu()
         {
-            Console.WriteLine("Write a number to check if it is a prime number!");
-            int number;
-            bool isInt = int.TryParse(Console.ReadLine(), out number);
+            Console.WriteLine("Press 1 to check for primenumber");
+            Console.WriteLine("Press 2 to check to print all primenumbers");
+            Console.WriteLine("Press 3 to check get next prime after highest prime in your list");
+            Console.WriteLine("Press 4 to exit");
+
+            var choice = Console.ReadLine();
+            Console.Clear();
 
 
-            if (isInt && number > 1)
+            switch (choice)
             {
-                if (CheckIfNumberIsPrime(number))
-                {
-                    Console.WriteLine(number + " is a prime number!");
-                }
-                else
-                {
-                    Console.WriteLine(number + " is NOT a prime number!");
-                }
-
+                case "1":
+                    Console.WriteLine("Enter a number: ");
+                    Console.WriteLine(pc.PrimeInput(Console.ReadLine()));
+                    break;
+                case "2":
+                    Console.WriteLine(pc.PrintPrimes());
+                    break;
+                case "3":
+                    pc.CheckNextPrime();
+                    break;
+                case "4":
+                    Environment.Exit(0); //Avslutar applikationen
+                    break;
             }
-            else Console.WriteLine("Please enter an integer!");
         }
 
-        static bool CheckIfNumberIsPrime(int number)
-        {
-            for (int i = 2; i < number; i++)
-            {
-                if (number % i == 0)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }
